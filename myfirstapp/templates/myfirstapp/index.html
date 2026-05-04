@@ -1,0 +1,181 @@
+{% extends "myfirstapp/base.html" %}
+
+{% block title %}Lista de Estudiantes{% endblock %}
+
+{% block content %}
+
+<!-- ── Encabezado de página ─────────────────────────── -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="h3 mb-1 fw-bold">Estudiantes</h1>
+    <p class="text-muted mb-0">
+      <i class="bi bi-people me-1"></i>
+      {{ estudiantes.count }} alumno{{ estudiantes.count|pluralize }} registrado{{ estudiantes.count|pluralize }}
+    </p>
+  </div>
+  <!-- Botón que abre el modal para agregar -->
+  <button type="button" class="btn btn-primary"
+          data-bs-toggle="modal" data-bs-target="#modalAgregar">
+    <i class="bi bi-plus-lg me-1"></i> Nuevo estudiante
+  </button>
+</div>
+
+<!-- ── Tabla de estudiantes ─────────────────────────── -->
+{% if estudiantes %}
+<div class="card shadow-sm">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col" class="text-center">Promedio</th>
+            <th scope="col" class="text-center">Tipo</th>
+            <th scope="col" class="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for estudiante in estudiantes %}
+          <tr>
+            <td class="text-muted" style="width:3rem">{{ estudiante.id }}</td>
+
+            <td>
+              <a href="{% url 'myfirstapp:detalles' estudiante.id %}"
+                 class="fw-semibold text-decoration-none text-dark">
+                {{ estudiante.apellidos }}, {{ estudiante.nombre }}
+              </a>
+            </td>
+
+            <td class="text-center">
+              <span class="badge
+                {% if estudiante.promedio >= 9 %}bg-success
+                {% elif estudiante.promedio >= 7 %}bg-warning text-dark
+                {% else %}bg-danger
+                {% endif %}">
+                {{ estudiante.promedio }}
+              </span>
+            </td>
+
+            <td class="text-center">
+              {% if estudiante.foraneo %}
+                <span class="badge bg-info text-dark">
+                  <i class="bi bi-airplane me-1"></i>Foráneo
+                </span>
+              {% else %}
+                <span class="badge bg-secondary">
+                  <i class="bi bi-house me-1"></i>Local
+                </span>
+              {% endif %}
+            </td>
+
+            <td class="text-end">
+              <a href="{% url 'myfirstapp:detalles' estudiante.id %}"
+                 class="btn btn-sm btn-primary">
+                <i class="bi bi-eye me-1"></i>Ver detalles
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% else %}
+<!-- ── Estado vacío ──────────────────────────────────── -->
+<div class="text-center py-5">
+  <i class="bi bi-people display-1 text-muted"></i>
+  <h4 class="mt-3 text-muted">No hay estudiantes registrados</h4>
+  <p class="text-muted">Agrega el primero con el botón de arriba.</p>
+</div>
+{% endif %}
+
+
+<!-- ══════ MODAL — Agregar Estudiante ═══════════════════
+     Nota: los modales requieren Bootstrap JS Bundle      -->
+<div class="modal fade" id="modalAgregar" tabindex="-1"
+     aria-labelledby="modalAgregarLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="modalAgregarLabel">
+          <i class="bi bi-person-plus-fill me-2"></i>Nuevo Estudiante
+        </h5>
+        <button type="button" class="btn-close btn-close-white"
+                data-bs-dismiss="modal"></button>
+      </div>
+
+      <form action="{% url 'myfirstapp:agrega_estudiante_forma' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+
+          <div class="row g-3">
+            <!-- Nombre -->
+            <div class="col-md-6">
+              <label class="form-label fw-semibold" for="nombre">
+                Nombre <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="form-control" id="nombre"
+                     name="nombre" placeholder="Ej. Ana" required/>
+            </div>
+
+            <!-- Apellidos -->
+            <div class="col-md-6">
+              <label class="form-label fw-semibold" for="apellidos">
+                Apellidos <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="form-control" id="apellidos"
+                     name="apellidos" placeholder="Ej. García Méndez" required/>
+            </div>
+
+            <!-- Edad -->
+            <div class="col-md-4">
+              <label class="form-label fw-semibold" for="edad">Edad</label>
+              <input type="number" class="form-control" id="edad"
+                     name="edad" min="15" max="80" placeholder="20"/>
+            </div>
+
+            <!-- Promedio -->
+            <div class="col-md-4">
+              <label class="form-label fw-semibold" for="promedio">Promedio</label>
+              <input type="number" class="form-control" id="promedio"
+                     name="promedio" step="0.1" min="0" max="10" placeholder="9.5"/>
+              <div class="form-text">De 0.0 a 10.0</div>
+            </div>
+
+            <!-- Foráneo -->
+            <div class="col-md-4 d-flex align-items-center">
+              <div class="form-check form-switch mt-3">
+                <input class="form-check-input" type="checkbox"
+                       id="foraneo" name="foraneo" value="True"/>
+                <label class="form-check-label fw-semibold" for="foraneo">
+                  Foráneo
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary"
+                  data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-1"></i>Guardar
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+<!-- ════════════════════════════════════════════════════ -->
+
+{% endblock %}
+
+{% block extra_scripts %}
+{% load static %}
+<script src="{% static 'myfirstapp/myjavascript.js' %}"></script>
+{% endblock %}
