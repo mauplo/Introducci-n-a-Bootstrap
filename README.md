@@ -172,3 +172,7 @@ Los demás templates solo necesitan extender `base.html`:
 | Node.js LTS | https://nodejs.org |
  
 ---
+## Resultado
+<img width="1248" height="429" alt="Screenshot 2026-05-04 at 2 51 52 p m" src="https://github.com/user-attachments/assets/f881932a-7b40-4896-bb13-d5dc62cbff62" />
+<img width="1239" height="680" alt="Screenshot 2026-05-04 at 2 51 59 p m" src="https://github.com/user-attachments/assets/023dcda9-2fec-4777-b5c9-4f53517faf70" />
+<img width="1242" height="545" alt="Screenshot 2026-05-04 at 2 51 43 p m" src="https://github.com/user-attachments/assets/11f81b36-1f14-4d75-aa31-f9e134725a13" />
