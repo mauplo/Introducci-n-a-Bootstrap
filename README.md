@@ -25,7 +25,7 @@ Introducci-n-a-Bootstrap/
 │           └── hola_mundo.html         ← demo mínimo
 └── presentacion.pdf                   ← slides de la exposición 
 ```
-> `node_modules/` **no está en el repo** (ver `.gitignore`).  
+> `node_modules/` **no está en el repo** (`.gitignore`).  
 > Después de clonar es necesario correr `npm install` para reinstalar Bootstrap.
  
 ---
