@@ -125,7 +125,7 @@ Abrir **[http://127.0.0.1:8000/myfirstapp/](http://127.0.0.1:8000/myfirstapp/)**
 ---
 ## Cómo funciona la integración Bootstrap + Django
  
-El archivo clave es `base.html`. Todos los demás templates heredan con `{% extends %}`:
+El archivo importante es `base.html`. Todos los demás templates heredan con `{% extends %}`:
  
 ```html
 {% load static %}   ← carga el sistema de estáticos de Django
