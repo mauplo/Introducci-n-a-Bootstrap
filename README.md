@@ -32,7 +32,7 @@ Introducci-n-a-Bootstrap/
  
 ## Setup paso a paso
 
-Si prefieres un tutorial más visual (con capturas de pantallas), accede al archivo [Presentación](https://github.com/mauplo/Introducci-n-a-Bootstrap/blob/main/presentacion.pdf)
+Si prefieres un tutorial más visual (con capturas de pantallas), visita nuestra [presentación]([https://github.com/mauplo/Introducci-n-a-Bootstrap/blob/main/presentacion.pdf](https://canva.link/l09hdetntq445n0))
 
 ### Requisitos previos
  
